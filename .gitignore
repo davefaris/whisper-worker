@@ -1,0 +1,12 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Mako Secrets & Temps
+youtube_cookies.txt
+*.sh
+.env
+
+# Credentials (just in case)
+tskey-auth-*
