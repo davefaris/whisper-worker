@@ -1,15 +1,15 @@
 #!/bin/bash
-
-# Start Tailscale in userspace mode
+# Start tailscaled in userspace mode with a SOCKS5 listener
 tailscaled --tun=userspace-networking --socks5-server=localhost:1080 &
 
-# Wait for it to spin up
 sleep 5
 
-# USE PLACEHOLDERS: These are filled by RunPod at runtime
+# Connect and FORCE all traffic through your home exit node
 tailscale up --authkey=${TS_AUTHKEY} --exit-node=${HOME_PC_IP} --exit-node-allow-lan-access=true
 
-echo "Mako Gateway Connected: Routing through Alexandria office."
+# CRITICAL: Verify the connection is working
+echo "Testing proxy connection..."
+curl --socks5-hostname localhost:1080 https://ifconfig.me
+# This should print your ALEXANDRIA home IP, not a RunPod IP.
 
-# Launch the worker
 python -u /handler.py
